@@ -1,0 +1,6 @@
+numpy
+scikit-learn
+
+[dev]
+pytest
+pytest-cov

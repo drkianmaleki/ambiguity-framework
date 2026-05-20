@@ -1,0 +1,97 @@
+# =============================================================================
+# ambiguity-framework .gitignore
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Data — never commit raw CSVs or processed caches
+# Raw CSVs are large (up to 284MB) and have their own licenses.
+# Download instructions are in data/raw/README.md
+# -----------------------------------------------------------------------------
+data/raw/*.csv
+data/raw/*.xlsx
+data/raw/*.zip
+data/processed/*.pkl
+data/processed/*.pickle
+
+# Keep the directory structure and documentation
+!data/raw/README.md
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# -----------------------------------------------------------------------------
+# Results — generated outputs, not source files
+# Regenerate with: python experiments/run_all_real.py and run_synthetic.py
+# Summary CSVs are small and included so visitors can see results directly.
+# -----------------------------------------------------------------------------
+results/tables/*.csv
+results/figures/*.png
+results/figures/*.pdf
+
+# Keep directory structure
+!results/tables/.gitkeep
+!results/figures/.gitkeep
+
+# Include summary files — small, useful for GitHub visitors
+# Any CSV ending with _summary.csv is included (e.g. real_summary.csv, synthetic_summary.csv)
+!results/tables/*_summary.csv
+
+# -----------------------------------------------------------------------------
+# Python
+# -----------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyd
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+*.egg
+.eggs/
+MANIFEST
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# pytest
+.pytest_cache/
+.coverage
+htmlcov/
+*.cover
+
+# mypy
+.mypy_cache/
+.dmypy.json
+
+# -----------------------------------------------------------------------------
+# Jupyter
+# -----------------------------------------------------------------------------
+.ipynb_checkpoints/
+*.ipynb
+
+# -----------------------------------------------------------------------------
+# IDEs
+# -----------------------------------------------------------------------------
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# -----------------------------------------------------------------------------
+# OS
+# -----------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# -----------------------------------------------------------------------------
+# Misc
+# -----------------------------------------------------------------------------
+*.log
+*.tmp
+*.bak

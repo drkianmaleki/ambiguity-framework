@@ -1,0 +1,137 @@
+# experiment_grid.yaml
+# Source of truth for all reproducible experiment parameters.
+#
+# Two roles:
+#   1. Dataset metadata — mirrors REGISTRY in data_loader.py.
+#      If a transformation changes in the Python code, update it here too.
+#   2. Experiment parameters — grid ranges, seeds, mixture configs used
+#      by run_synthetic.py and the metrics (AAPR, AAF1, AArange).
+
+# ---------------------------------------------------------------------------
+# DATASETS
+# ---------------------------------------------------------------------------
+datasets:
+
+  creditcard:
+    path: "data/raw/creditcard.csv"
+    target: "Class"
+    drop_cols: []
+    categorical_cols: []
+    status: available
+    note: "All features are numeric PCA components; no preprocessing needed."
+
+  uci_credit:
+    path: "data/raw/UCI_Credit_Card.csv"
+    target: "default.payment.next.month"
+    drop_cols: ["ID"]
+    categorical_cols: []
+    status: available
+    note: "Drop ID; all remaining features are numeric."
+
+  heart:
+    path: "data/raw/heart.csv"
+    target: "HeartDisease"
+    drop_cols: []
+    categorical_cols:
+      - Sex
+      - ChestPainType
+      - RestingECG
+      - ExerciseAngina
+      - ST_Slope
+    status: available
+
+  brfss:
+    path: "data/raw/heart_disease_health_indicators_BRFSS2015.csv"
+    target: "HeartDiseaseorAttack"
+    drop_cols: []
+    categorical_cols: []
+    status: available
+    note: "All 21 features are already numeric binary/ordinal survey responses."
+
+  readmissions:
+    path: "data/raw/hospital_readmissions.csv"
+    target: "readmitted"
+    drop_cols: []
+    categorical_cols:
+      - medical_specialty
+      - diag_1
+      - diag_2
+      - diag_3
+      - glucose_test
+      - A1Ctest
+      - change
+      - diabetes_med
+    age_bracket_col: age          # ordinal bracket → midpoint integer
+    target_map:                   # binarize string target
+      yes: 1
+      no: 0
+    status: available
+    note: "age bracket mapped to midpoint int; target binarized from yes/no."
+
+  nslkdd:
+    path: "data/raw/nsl_kdd_dataset.csv"
+    target: "label"
+    drop_cols: []
+    categorical_cols:
+      - protocol_type
+      - service
+      - flag
+    binary_label_normal_cls: normal   # normal=0, all attack classes=1
+    status: available
+    note: "Binary framing: normal=0, all attack classes (DoS/Probe/U2R/R2L)=1. Simulated NSL-KDD structure, 4,431 rows (Kaggle: programmer3/nsl-kdd-intrusion-detection-dataset)."
+
+# ---------------------------------------------------------------------------
+# SYNTHETIC EXPERIMENT (run_synthetic.py)
+# ---------------------------------------------------------------------------
+synthetic:
+  seeds: [42, 123, 456, 789, 1024]
+  n_samples: [500, 1000, 5000]
+
+  grid:
+    mu_range: [-3.0, 3.0]
+    sigma_range: [0.5, 3.0]
+    grid_steps: 50
+
+  # Named Gaussian mixture configurations covering the ambiguity spectrum
+  gaussian_mixtures:
+    - name: "well_separated"
+      description: "Classes are cleanly separable; expected low ambiguity"
+      mu:    [[0, 0], [4, 4]]
+      sigma: [[1, 0], [0, 1]]
+
+    - name: "overlapping"
+      description: "Moderate overlap; moderate ambiguity"
+      mu:    [[0, 0], [1.5, 1.5]]
+      sigma: [[1, 0], [0, 1]]
+
+    - name: "high_ambiguity"
+      description: "Heavy overlap; high ambiguity region expected"
+      mu:    [[0, 0], [0.5, 0.5]]
+      sigma: [[2, 0], [0, 2]]
+
+    - name: "constant_auc_variant_a"
+      description: "AUC-matched pair A — same global AUC as variant_b, different local ambiguity"
+      mu:    [[0, 0], [2, 2]]
+      sigma: [[1.5, 0], [0, 1.5]]
+
+    - name: "constant_auc_variant_b"
+      description: "AUC-matched pair B — same global AUC as variant_a, different local ambiguity"
+      mu:    [[-1, 1], [1, -1]]
+      sigma: [[1, 0], [0, 1]]
+
+# ---------------------------------------------------------------------------
+# GLOBAL EXPERIMENT SETTINGS
+# ---------------------------------------------------------------------------
+experiments:
+  random_state: 42
+  test_size: 0.2
+  cv_folds: 5
+
+  metrics:
+    aapr:
+      grid_resolution: 100
+      bandwidth: "scott"        # KDE bandwidth estimator
+    aaf1:
+      beta: 1.0                 # F1 weighting (beta=1 → equal precision/recall)
+    aarange:
+      alpha: 0.05               # significance level for ambiguity region boundary
