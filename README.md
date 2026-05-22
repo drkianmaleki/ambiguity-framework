@@ -78,6 +78,8 @@ ambiguity-framework/
 │   ├── run_calibration_ablation.py ← Platt / isotonic calibration study
 │   ├── run_bootstrap_ci_fast.py  ← 95% bootstrap CIs on key comparisons
 │   ├── run_entropy_comparison.py ← entropy and margin uncertainty baselines
+│   ├── run_paired_tests.py       ← Wilcoxon signed-rank tests (10-fold CV)
+│   ├── run_aamass_tstar.py       ← AAMass at F1-optimal threshold t*
 │   ├── plot_reliability.py       ← reliability diagrams (calibration curves)
 │   ├── plot_graphical_abstract.py ← graphical abstract figure
 │   └── configs/                  ← experiment_grid.yaml (all reproducible params)
@@ -151,7 +153,30 @@ python experiments/run_entropy_comparison.py
 Compares AAMass against predictive entropy and margin uncertainty.
 Results written to `results/tables/entropy_comparison_summary.csv`.
 
-### 7. Generate figures
+### 7. Run paired statistical tests (Wilcoxon signed-rank)
+
+```bash
+python experiments/run_paired_tests.py
+```
+
+Runs 10-fold stratified cross-validation and applies two-sided Wilcoxon
+signed-rank tests on fold-paired AAMass and AUC-ROC observations.
+Results written to `results/tables/paired_tests_summary.csv`.
+Estimated runtime: ~2 hours (all six datasets).
+
+### 8. Run AAMass at F1-optimal threshold t*
+
+```bash
+python experiments/run_aamass_tstar.py
+```
+
+Evaluates AAMass centred at the F1-optimal operating threshold t* for each
+classifier and dataset. Demonstrates metric utility on imbalanced datasets
+where the default 0.5 centre is suboptimal.
+Results written to `results/tables/aamass_tstar_summary.csv`.
+Estimated runtime: ~1 minute.
+
+### 9. Generate figures
 
 ```bash
 python experiments/plot_reliability.py --dataset readmissions
