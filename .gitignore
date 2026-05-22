@@ -38,6 +38,8 @@ results/figures/*.pdf
 !results/figures/reliability_readmissions.png
 !results/tables/paired_tests_summary.csv
 !results/tables/aamass_tstar_summary.csv
+!results/tables/calibrated_aamass_summary.csv
+
 
 # Include summary files — small, useful for GitHub visitors
 # Any CSV ending with _summary.csv is included (e.g. real_summary.csv, synthetic_summary.csv)

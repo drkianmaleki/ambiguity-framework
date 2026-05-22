@@ -80,6 +80,7 @@ ambiguity-framework/
 │   ├── run_entropy_comparison.py ← entropy and margin uncertainty baselines
 │   ├── run_paired_tests.py       ← Wilcoxon signed-rank tests (10-fold CV)
 │   ├── run_aamass_tstar.py       ← AAMass at F1-optimal threshold t*
+│   ├── run_calibrated_aamass.py  ← calibrated vs raw AAMass for all datasets
 │   ├── plot_reliability.py       ← reliability diagrams (calibration curves)
 │   ├── plot_graphical_abstract.py ← graphical abstract figure
 │   └── configs/                  ← experiment_grid.yaml (all reproducible params)
@@ -176,7 +177,18 @@ where the default 0.5 centre is suboptimal.
 Results written to `results/tables/aamass_tstar_summary.csv`.
 Estimated runtime: ~1 minute.
 
-### 9. Generate figures
+### 9. Run calibrated AAMass comparison
+
+```bash
+python experiments/run_calibrated_aamass.py
+```
+
+Computes Platt-scaled (calibrated) AAMass alongside raw AAMass for all six
+datasets. Produces the dual raw/calibrated column in the main results table.
+Results written to `results/tables/calibrated_aamass_summary.csv`.
+Estimated runtime: ~5 minutes.
+
+### 10. Generate figures
 
 ```bash
 python experiments/plot_reliability.py --dataset readmissions
