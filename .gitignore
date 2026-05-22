@@ -33,8 +33,9 @@ results/figures/*.pdf
 
 # Include summary files — small, useful for GitHub visitors
 # Any CSV ending with _summary.csv is included (e.g. real_summary.csv, synthetic_summary.csv)
-!results/tables/*_summary.csv
 
+!results/tables/*_summary.csv
+!results/tables/bootstrap_ci_fast.csv
 # -----------------------------------------------------------------------------
 # Python
 # -----------------------------------------------------------------------------

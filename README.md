@@ -71,12 +71,16 @@ python main.py \
 ```
 ambiguity-framework/
 ├── ambiguity_suite/        ← installable package (the three metrics)
-├── experiments/            ← experiment runners and data loaders
-│   ├── _runner_base.py     ← shared LR / RF / XGBoost evaluation logic
-│   ├── run_all_real.py     ← run all six real-world datasets at once
-│   ├── run_synthetic.py    ← Gaussian mixture sweep
-│   ├── plot_reliability.py ← publication-quality reliability diagrams
-│   └── configs/            ← experiment_grid.yaml (all reproducible params)
+├── experiments/                  ← experiment runners and data loaders
+│   ├── _runner_base.py           ← shared LR / RF / XGBoost evaluation logic
+│   ├── run_all_real.py           ← run all six real-world datasets at once
+│   ├── run_synthetic.py          ← Gaussian mixture sweep
+│   ├── run_calibration_ablation.py ← Platt / isotonic calibration study
+│   ├── run_bootstrap_ci_fast.py  ← 95% bootstrap CIs on key comparisons
+│   ├── run_entropy_comparison.py ← entropy and margin uncertainty baselines
+│   ├── plot_reliability.py       ← reliability diagrams (calibration curves)
+│   ├── plot_graphical_abstract.py ← graphical abstract figure
+│   └── configs/                  ← experiment_grid.yaml (all reproducible params)
 ├── tests/                  ← 62 pytest tests (all passing)
 ├── data/
 │   ├── raw/                ← place downloaded CSVs here (see below)
@@ -110,7 +114,7 @@ Place the CSV files in `data/raw/` before running any experiments.
 python experiments/run_all_real.py --force-reload
 ```
 
-Results are written to `results/tables/`. Estimated runtime: ~25 minutes.
+Results written to `results/tables/real_summary.csv`. Estimated runtime: ~25 minutes.
 
 ### 3. Run synthetic experiments
 
@@ -118,11 +122,41 @@ Results are written to `results/tables/`. Estimated runtime: ~25 minutes.
 python experiments/run_synthetic.py
 ```
 
-### 4. Generate reliability diagrams
+Results written to `results/tables/synthetic_summary.csv`. Estimated runtime: ~5 minutes.
+
+### 4. Run calibration ablation study
+
+```bash
+python experiments/run_calibration_ablation.py
+```
+
+Compares raw vs Platt vs isotonic calibration across all classifiers and datasets.
+Results written to `results/tables/calibration_ablation_summary.csv`.
+
+### 5. Run bootstrap confidence intervals
+
+```bash
+python experiments/run_bootstrap_ci_fast.py
+```
+
+Computes 95% bootstrap CIs for AAMass and AUC on the four moderate-sized datasets.
+Results written to `results/tables/bootstrap_ci_fast.csv`. Estimated runtime: ~10 minutes.
+
+### 6. Run entropy and margin baseline comparison
+
+```bash
+python experiments/run_entropy_comparison.py
+```
+
+Compares AAMass against predictive entropy and margin uncertainty.
+Results written to `results/tables/entropy_comparison_summary.csv`.
+
+### 7. Generate figures
 
 ```bash
 python experiments/plot_reliability.py --dataset readmissions
-python experiments/plot_reliability.py --all   # all six datasets
+python experiments/plot_reliability.py --all        # all six datasets
+python experiments/plot_graphical_abstract.py       # graphical abstract
 ```
 
 ---
