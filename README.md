@@ -240,12 +240,11 @@ Utilities that return the bounds and full width of ℐ_δ.
 If you use this framework in your research, please cite:
 
 ```bibtex
-@article{maleki2025ambiguity,
-  author  = {Maleki, Kian},
-  title   = {The Ambiguity Range Framework: A Diagnostic Toolkit for
-             Operational Evaluation of Binary Classifiers},
-  journal = {Pattern Recognition Letters},
-  year    = {2026}
+@misc{maleki2026ambiguity,
+  author = {Maleki, Kian},
+  title  = {The Ambiguity Range Framework: A Diagnostic Toolkit for Operational Evaluation of Binary Classifiers},
+  year   = {2026},
+  note   = {Manuscript under review}
 }
 ```
 
