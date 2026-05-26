@@ -28,7 +28,7 @@ All three metrics return a value in **[0, 1]** where **lower = less ambiguous**.
 ## Installation
 
 ```bash
-git clone https://github.com/kianushmaleki/ambiguity-framework.git
+git clone https://github.com/drkianmaleki/ambiguity-framework.git
 cd ambiguity-framework
 pip install -e .
 pip install -r requirements.txt
