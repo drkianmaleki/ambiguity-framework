@@ -1,5 +1,11 @@
 # Ambiguity Range Framework
 
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
+![Tests](https://img.shields.io/badge/tests-62%20passing-brightgreen)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![Status](https://img.shields.io/badge/status-research%20prototype-lightgrey)
+![Domain](https://img.shields.io/badge/topic-model%20evaluation-purple)
+
 A model-agnostic diagnostic toolkit for post-hoc evaluation of binary classifiers.
 
 Standard metrics like AUC-ROC summarise *global* discriminative performance but
