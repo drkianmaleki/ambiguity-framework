@@ -1,3 +1,4 @@
+
 # Ambiguity Range Framework
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
@@ -5,13 +6,16 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Status](https://img.shields.io/badge/status-research%20prototype-lightgrey)
 ![Domain](https://img.shields.io/badge/topic-model%20evaluation-purple)
+[![Preprint](https://img.shields.io/badge/Preprint-SSRN-darkred)](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7118401)
 
 A model-agnostic diagnostic toolkit for post-hoc evaluation of binary classifiers.
+
+📄 **Preprint:** [Quantifying Decision-Boundary Uncertainty in Binary Classifiers: The Ambiguity Range Framework](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7118401)
 
 Standard metrics like AUC-ROC summarise *global* discriminative performance but
 say nothing about the *local* distribution of predicted probabilities near the
 decision boundary. A classifier with AUC = 0.90 may still assign probabilities
-clustered tightly around 0.5 for a large fraction of predictions — instances
+clustered tightly around 0.5 for a large fraction of predictions—instances
 where the model is, operationally, guessing.
 
 The Ambiguity Range Framework makes this indecision zone explicit and measurable
